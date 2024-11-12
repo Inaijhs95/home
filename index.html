@@ -3,62 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>逃げ回るリンク - スマホ向け</title>
+<title>黒板風数式アニメーション</title>
 <style>
     body {
+        background-color: #2b3a42;
+        color: #f5f5f5;
+        font-family: 'Courier New', Courier, monospace;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
+        padding: 20px;
         height: 100vh;
-        background-color: #f0f8ff;
-        font-family: Arial, sans-serif;
         overflow: hidden;
+    }
+    .chalkboard {
+        width: 100%;
+        max-width: 800px;
+        height: 100%;
+        overflow-y: hidden;
         position: relative;
     }
-    .moving-link {
-        font-size: 1.2em;
-        color: #007bff;
-        text-decoration: underline;
-        position: absolute;
-        cursor: pointer;
-        transition: transform 0.2s;
-        max-width: 80%;
-        text-align: center;
+    .equation {
+        white-space: pre;
+        font-size: 1.5em;
+        line-height: 1.6em;
+        opacity: 0.9;
     }
-    .moving-link:hover {
-        transform: scale(1.2);
+    .chalk-text {
+        color: #f5f5f5;
+        text-shadow: 0 0 5px #444;
+    }
+    .link {
+        color: #ffca28;
+        text-decoration: underline;
+        cursor: pointer;
+        display: inline;
     }
 </style>
-<script>
-    const link = document.querySelector('.moving-link');
-
-    function moveLink() {
-        const x = Math.random() * (window.innerWidth - 150);
-        const y = Math.random() * (window.innerHeight - 100);
-        link.style.left = `${x}px`;
-        link.style.top = `${y}px`;
-    }
-
-    document.addEventListener('touchmove', (e) => {
-        const touch = e.touches[0];
-        const linkRect = link.getBoundingClientRect();
-        const distanceX = Math.abs(touch.clientX - (linkRect.left + linkRect.width / 2));
-        const distanceY = Math.abs(touch.clientY - (linkRect.top + linkRect.height / 2));
-
-        if (distanceX < 100 && distanceY < 50) {
-            moveLink();
-        }
-    });
-
-    link.addEventListener('click', () => {
-        alert('よく捕まえました！リンク先へ移動します。');
-        window.location.href = "https://line.me/R/oaMessage/%40778unfqy/%E3%83%A2%E3%83%BC%E3%83%AB%E3%82%B9%E4%BF%A1%E5%8F%B7%E3%80%81%E8%A7%A3%E8%AA%AD%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%EF%BC%81";
-    });
-</script>
 </head>
 <body>
 
-<a class="moving-link">▶ こちらのリンクをタップして秘密を発見する</a>
+<div class="chalkboard">
+    <div id="equation" class="equation chalk-text"></div>
+</div>
+
+<script>
+    const equationElement = document.getElementById('equation');
+    const equations = [
+        "E = mc^2",
+        "a^2 + b^2 = c^2",
+        "f(x) = x^2 + 2x + 1",
+        "∫_0^∞ e^{-x^2} dx = √π/2",
+        "sin(θ)^2 + cos(θ)^2 = 1",
+        "e^{iπ} + 1 = 0",
+        "アクセスはこちら → 特別な計算式: x = ",
+        "(-b ± √(b^2 - 4ac)) / 2a"
+    ];
+
+    let index = 0;
+    let charIndex = 0;
+
+    function typeEquation() {
+        if (index < equations.length) {
+            if (charIndex < equations[index].length) {
+                equationElement.textContent += equations[index][charIndex];
+                charIndex++;
+                setTimeout(typeEquation, 50);
+            } else {
+                equationElement.textContent += "\n";
+                charIndex = 0;
+                index++;
+
+                // リンクを自然に表示
+                if (index === 6) {
+                    insertHiddenLink();
+                } else {
+                    setTimeout(typeEquation, 300);
+                }
+            }
+        }
+    }
+
+    function insertHiddenLink() {
+        const linkText = document.createElement('span');
+        linkText.classList.add('link');
+        linkText.textContent = "タップして解を確認";
+        linkText.addEventListener('click', () => {
+            window.location.href = "https://line.me/R/oaMessage/%40778unfqy/%E3%83%A2%E3%83%BC%E3%83%AB%E3%82%B9%E4%BF%A1%E5%8F%B7%E3%80%81%E8%A7%A3%E8%AA%AD%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%EF%BC%81";
+        });
+        equationElement.appendChild(linkText);
+        setTimeout(typeEquation, 500);
+    }
+
+    // 数式のアニメーション開始
+    typeEquation();
+</script>
 
 </body>
 </html>
