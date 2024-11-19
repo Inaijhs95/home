@@ -20,18 +20,25 @@
         <a href="quiz.html">クイズ一覧に戻る</a>
     </main>
     <script>
-        document.getElementById('answerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const answer = document.getElementById('answer').value.trim();
-            const correctAnswer = "いない"; // 正解を設定
-            const result = document.getElementById('result');
+    // ページ読み込み時に正解済みか確認し、ロック
+    if (localStorage.getItem('correctQ1') === 'true') {
+        alert('この問題はすでに正解済みです。');
+        window.location.href = 'quiz.html'; // クイズ選択画面に戻す
+    }
 
-            if (answer === correctAnswer) {
-                result.textContent = "正解です！次の問題に進んでください。";
-            } else {
-                result.textContent = "不正解です。もう一度挑戦してください。";
-            }
-        });
+    document.getElementById('answerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const answer = document.getElementById('answer').value.trim();
+        const correctAnswer = "いない"; // 正解を設定
+
+        if (answer === correctAnswer) {
+            localStorage.setItem('correctQ1', 'true'); // 正解状況を保存
+            alert('正解です！ホーム画面で正解状況を確認してください。');
+            window.location.href = 'home.html'; // ホーム画面に戻る
+        } else {
+            alert('不正解です。もう一度挑戦してください。');
+        }
+    });
     </script>
 </body>
 </html>
