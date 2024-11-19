@@ -11,6 +11,10 @@
         event.preventDefault(); // フォームのデフォルト動作をキャンセル
         const userName = document.getElementById('userName').value.trim();
         localStorage.setItem('userName', userName); // 名前をローカルストレージに保存
-        window.location.href = 'home.html'; // ホーム画面に遷移
+        if (userName) {
+            window.location.href = 'home.html'; // ホーム画面に遷移
+        } else {
+            alert('名前を入力してください！');
+        }
     }
 </script>
