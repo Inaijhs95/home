@@ -10,21 +10,20 @@
     <header>問題1</header>
     <main>
         <h1>問題1</h1>
-        <p>画像から導き出せるひらがな3文字をお答えください</p>
+        <img src="images/Q1.png" alt="問題1の画像" style="max-width: 100%; height: auto;">
         <form id="answerForm">
             <label for="answer">解答を入力してください:</label>
             <input type="text" id="answer" name="answer" required>
             <button type="submit">送信</button>
         </form>
         <div id="result" style="margin-top: 20px; color: yellow;"></div>
-        <a href="hint1.html" class="menu-item">ヒントを見る</a>
         <a href="quiz.html">クイズ一覧に戻る</a>
     </main>
     <script>
         document.getElementById('answerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const answer = document.getElementById('answer').value.trim();
-            const correctAnswer = "正解"; // 正解を設定
+            const correctAnswer = "いない"; // 正解を設定
             const result = document.getElementById('result');
 
             if (answer === correctAnswer) {
