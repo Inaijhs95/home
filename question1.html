@@ -17,28 +17,31 @@
             <button type="submit">送信</button>
         </form>
         <div id="result" style="margin-top: 20px; color: yellow;"></div>
+        <div class="menu">
+            <a href="hint1.html" class="menu-item">ヒントを見る</a> <!-- ヒントリンク追加 -->
+        </div>
         <a href="quiz.html">クイズ一覧に戻る</a>
     </main>
     <script>
-    // ページ読み込み時に正解済みか確認し、ロック
-    if (localStorage.getItem('correctQ1') === 'true') {
-        alert('この問題はすでに正解済みです。');
-        window.location.href = 'quiz.html'; // クイズ選択画面に戻す
-    }
-
-    document.getElementById('answerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const answer = document.getElementById('answer').value.trim();
-        const correctAnswer = "いない"; // 正解を設定
-
-        if (answer === correctAnswer) {
-            localStorage.setItem('correctQ1', 'true'); // 正解状況を保存
-            alert('正解です！ホーム画面で正解状況を確認してください。');
-            window.location.href = 'home.html'; // ホーム画面に戻る
-        } else {
-            alert('不正解です。もう一度挑戦してください。');
+        // ページ読み込み時に正解済みか確認し、ロック
+        if (localStorage.getItem('correctQ1') === 'true') {
+            alert('この問題はすでに正解済みです。');
+            window.location.href = 'quiz.html'; // クイズ選択画面に戻す
         }
-    });
+
+        document.getElementById('answerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const answer = document.getElementById('answer').value.trim();
+            const correctAnswer = "いない"; // 正解を設定
+
+            if (answer === correctAnswer) {
+                localStorage.setItem('correctQ1', 'true'); // 正解状況を保存
+                alert('正解です！ホーム画面で正解状況を確認してください。');
+                window.location.href = 'home.html'; // ホーム画面に戻る
+            } else {
+                alert('不正解です。もう一度挑戦してください。');
+            }
+        });
     </script>
 </body>
 </html>
