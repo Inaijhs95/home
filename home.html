@@ -25,69 +25,97 @@
         </div>
     </main>
     <script>
-        // 暗号化関数 (Base64エンコードの簡易例)
-        const encryptData = (data) => btoa(JSON.stringify(data));
-
-        // 全問正解のチェックとLINE URL生成
-        const checkAllCorrectAndGenerateURL = () => {
-            const userName = localStorage.getItem('userName');
-            const statusList = {
-                Q1: {
-                    correct: localStorage.getItem('correctQ1') === 'true',
-                    hintUsed: localStorage.getItem('hintUsedQ1') === 'true'
-                },
-                Q2: {
-                    correct: localStorage.getItem('correctQ2') === 'true',
-                    hintUsed: localStorage.getItem('hintUsedQ2') === 'true'
-                },
-                Q3: {
-                    correct: localStorage.getItem('correctQ3') === 'true',
-                    hintUsed: localStorage.getItem('hintUsedQ3') === 'true'
-                },
-                Q4: {
-                    correct: localStorage.getItem('correctQ4') === 'true',
-                    hintUsed: localStorage.getItem('hintUsedQ4') === 'true'
-                }
-            };
-
-            const allCorrect = statusList.Q1.correct && statusList.Q2.correct && statusList.Q3.correct && statusList.Q4.correct;
-
-            if (allCorrect) {
-                // 全問正解日時
-                const completionTime = new Date().toISOString();
-
-                // 暗号化データ
-                const encryptedData = encryptData({
-                    name: userName,
-                    hints: {
-                        Q1: statusList.Q1.hintUsed,
-                        Q2: statusList.Q2.hintUsed,
-                        Q3: statusList.Q3.hintUsed,
-                        Q4: statusList.Q4.hintUsed
-                    },
-                    completedAt: completionTime
-                });
-
-                // LINE送信URLを生成
-                const lineURL = `https://line.me/R/oaMessage/@778unfqy/${encodeURIComponent(encryptedData)}`;
-
-                // 送信ボタンを表示
-                const sendButton = document.getElementById('sendToLINE');
-                sendButton.style.display = 'block';
-                sendButton.addEventListener('click', () => {
-                    window.location.href = lineURL; // LINE送信リンクを開く
-                });
+    // 正解状況とヒント使用状況の表示を更新
+    const updateStatus = () => {
+        const statusList = {
+            Q1: {
+                correct: localStorage.getItem('correctQ1') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ1') === 'true'
+            },
+            Q2: {
+                correct: localStorage.getItem('correctQ2') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ2') === 'true'
+            },
+            Q3: {
+                correct: localStorage.getItem('correctQ3') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ3') === 'true'
+            },
+            Q4: {
+                correct: localStorage.getItem('correctQ4') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ4') === 'true'
             }
         };
 
-        // ページ読み込み時にステータスを更新し、全問正解をチェック
-        window.onload = () => {
-            const userName = localStorage.getItem('userName');
-            if (userName) {
-                document.getElementById('greeting').textContent = `${userName}さん、こんにちは！`;
+        // 各問題の正解状況とヒント使用状況を更新
+        document.getElementById('statusQ1').textContent = `問題1: ${statusList.Q1.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q1.hintUsed ? '使用済み' : '未使用'}`;
+        document.getElementById('statusQ2').textContent = `問題2: ${statusList.Q2.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q2.hintUsed ? '使用済み' : '未使用'}`;
+        document.getElementById('statusQ3').textContent = `問題3: ${statusList.Q3.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q3.hintUsed ? '使用済み' : '未使用'}`;
+        document.getElementById('statusQ4').textContent = `問題4: ${statusList.Q4.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q4.hintUsed ? '使用済み' : '未使用'}`;
+    };
+
+    // 全問正解のチェックとLINE URL生成
+    const checkAllCorrectAndGenerateURL = () => {
+        const userName = localStorage.getItem('userName');
+        const statusList = {
+            Q1: {
+                correct: localStorage.getItem('correctQ1') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ1') === 'true'
+            },
+            Q2: {
+                correct: localStorage.getItem('correctQ2') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ2') === 'true'
+            },
+            Q3: {
+                correct: localStorage.getItem('correctQ3') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ3') === 'true'
+            },
+            Q4: {
+                correct: localStorage.getItem('correctQ4') === 'true',
+                hintUsed: localStorage.getItem('hintUsedQ4') === 'true'
             }
-            checkAllCorrectAndGenerateURL();
         };
-    </script>
+
+        const allCorrect = statusList.Q1.correct && statusList.Q2.correct && statusList.Q3.correct && statusList.Q4.correct;
+
+        if (allCorrect) {
+            // 全問正解日時
+            const completionTime = new Date().toISOString();
+
+            // 暗号化データ
+            const encryptData = (data) => btoa(JSON.stringify(data));
+            const encryptedData = encryptData({
+                name: userName,
+                hints: {
+                    Q1: statusList.Q1.hintUsed,
+                    Q2: statusList.Q2.hintUsed,
+                    Q3: statusList.Q3.hintUsed,
+                    Q4: statusList.Q4.hintUsed
+                },
+                completedAt: completionTime
+            });
+
+            // LINE送信URLを生成
+            const lineURL = `https://line.me/R/oaMessage/@778unfqy/${encodeURIComponent(encryptedData)}`;
+
+            // 送信ボタンを表示
+            const sendButton = document.getElementById('sendToLINE');
+            sendButton.style.display = 'block';
+            sendButton.addEventListener('click', () => {
+                window.location.href = lineURL; // LINE送信リンクを開く
+            });
+        }
+    };
+
+    // ページ読み込み時にステータスを更新し、全問正解をチェック
+    window.onload = () => {
+        const userName = localStorage.getItem('userName');
+        if (userName) {
+            document.getElementById('greeting').textContent = `${userName}さん、こんにちは！`;
+        }
+        updateStatus(); // ステータスを更新
+        checkAllCorrectAndGenerateURL(); // 全問正解をチェック
+    };
+</script>
+
 </body>
 </html>
