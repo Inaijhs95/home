@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ヒント - 問題4</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>ヒント - 問題4</header>
+    <main>
+        <div id="warning" style="display: flex; flex-direction: column; align-items: center;">
+            <p style="font-size: 1.2em; margin: 20px;">
+                このページを進むと、ヒント使用が記録される可能性があります。
+            </p>
+            <p style="font-size: 1em; margin: 10px;">
+                ヒントを利用する前に、もう一度問題に挑戦することをお勧めします。
+            </p>
+            <div class="menu">
+                <button id="proceedHint" class="menu-item">ヒントを確認する</button>
+                <a href="question4.html" class="menu-item">問題に戻る</a>
+            </div>
+        </div>
+        <div id="hintContentContainer" style="display: none;">
+            <h1>ヒント - 問題4</h1>
+            <p id="hintContent">ここにヒントが表示されます。</p>
+            <img id="hintImage" src="" alt="ヒント画像" style="max-width: 100%; display: none;">
+            <div class="menu">
+                <button id="viewMoreHint" class="menu-item">さらにヒントを見る</button>
+                <a href="question4.html" class="menu-item">問題に戻る</a>
+            </div>
+        </div>
+    </main>
+    <script>
+        // ヒントリストと画像のパス
+        const hints = [
+            { text: "問題文の鏡は実寸大のようです", image: "" },
+            { text: "鏡はここに置くようです。<br>つぎのヒントは…ありません…?!", image: "images/hint9.png" },
+            { text: "もうヒントは無いですよ…", image: "" },
+            { text: "もう答えを言いますよ…", image: "" },
+            { text: "きょだい", image: "images/hint10.png" }
+        ];
+
+        let currentHintIndex = 0;
+
+        // 初期ヒント表示設定
+        const hintContent = document.getElementById('hintContent');
+        const hintImage = document.getElementById('hintImage');
+        const hintContentContainer = document.getElementById('hintContentContainer');
+
+        const updateHint = () => {
+            const hint = hints[currentHintIndex];
+            hintContent.innerHTML = hint.text;
+            if (hint.image) {
+                hintImage.src = hint.image;
+                hintImage.style.display = "block";
+            } else {
+                hintImage.style.display = "none";
+            }
+        };
+
+        // ヒント使用確定操作
+        document.getElementById('proceedHint').addEventListener('click', function () {
+            document.getElementById('warning').style.display = "none";
+            hintContentContainer.style.display = "block";
+            updateHint();
+            localStorage.setItem('hintUsedQ4', 'true'); // ヒント使用を記録
+        });
+
+        // 「さらにヒントを見る」ボタンの動作
+        document.getElementById('viewMoreHint').addEventListener('click', function() {
+            if (currentHintIndex < hints.length - 1) {
+                currentHintIndex++;
+                updateHint();
+            } else {
+                alert('これ以上のヒントはありません。問題に戻って挑戦してください。');
+            }
+        });
+    </script>
+</body>
+</html>
