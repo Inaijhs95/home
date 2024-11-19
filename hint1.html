@@ -10,20 +10,60 @@
     <header>ヒント - 問題1</header>
     <main>
         <h1>ヒント - 問題1</h1>
-        <p>このヒントを使用すると、5倍チャンスが無効になります。慎重にご利用ください。</p>
-        <button id="revealHint">ヒントを表示</button>
-        <div id="hintContent" style="margin-top: 20px; display: none;">
-            <p>ここに問題1の具体的なヒントを記載します。</p>
+        <p id="hintContent">ここにヒントが表示されます。</p>
+        <img id="hintImage" src="" alt="ヒント画像" style="max-width: 100%; display: none;">
+        <div class="menu">
+            <button id="viewMoreHint" class="menu-item">さらにヒントを見る</button>
+            <a href="question1.html" class="menu-item">問題に戻る</a>
         </div>
-        <a href="question1.html">問題に戻る</a>
     </main>
     <script>
-        document.getElementById('revealHint').addEventListener('click', function() {
-            // ヒント表示
-            document.getElementById('hintContent').style.display = 'block';
-            // ヒント利用を記録
-            localStorage.setItem('hint_used_question1', 'true');
-            alert('ヒントを使用しました。この問題の5倍チャンスは無効になります。');
+        // ページ読み込み時に注意書きを表示
+        window.onload = function() {
+            alert('このヒントを使用すると、5倍チャンスが無効になります。慎重にご利用ください。');
+        };
+
+        // ヒントリストと画像のパス
+        const hints = [
+            { text: "まずは、【正しい向き】すなわち、回転していない文字を左から順に読んでみましょう", image: "images/hint1.png" },
+            { text: "“あかもじみぎからよめ” 画像の中の赤文字を右から読んでみましょう。", image: "images/hint2.png" },
+            { text: "“かがみもじよめ” 鏡文字とは上下はそのままで左右を反転させた文字を指します。この画像の中にある鏡文字を探しましょう。<br>＊下記の画像は鏡文字を説明するための画像であり、問題と直接の関係はありません。", image: "images/hint3.png" },
+            { text: "鏡文字は見つかりましたか？ 枠にとらわれず、画像をすみずみまで確認しましょう。つぎのヒントは…ありません?!", image: "" },
+            { text: "もうヒントは無いですよ…", image: "" },
+            { text: "もう答えを言いますよ…", image: "" },
+            { text: "いない", image: "" }
+        ];
+
+        let currentHintIndex = 0;
+
+        // ヒント表示要素
+        const hintContent = document.getElementById('hintContent');
+        const hintImage = document.getElementById('hintImage');
+
+        // 初期ヒントを表示
+        const updateHint = () => {
+            const hint = hints[currentHintIndex];
+            hintContent.innerHTML = hint.text;
+            if (hint.image) {
+                hintImage.src = hint.image;
+                hintImage.style.display = "block";
+            } else {
+                hintImage.style.display = "none";
+            }
+        };
+        updateHint();
+
+        // 「さらにヒントを見る」ボタンの動作
+        document.getElementById('viewMoreHint').addEventListener('click', function() {
+            if (currentHintIndex < hints.length - 1) {
+                currentHintIndex++;
+                updateHint();
+            } else {
+                alert('これ以上のヒントはありません。問題に戻って挑戦してください。');
+            }
+
+            // ヒント使用を記録
+            localStorage.setItem('hintUsedQ1', 'true');
         });
     </script>
 </body>
