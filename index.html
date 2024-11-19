@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>謎解きキャッシュバック - メインメニュー</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>謎解きキャッシュバック - メインメニュー</header>
-    <main>
-        <h1>名前を入力してスタート！</h1>
-        <form id="startForm" action="quiz.html" method="GET">
-            <div class="input-container">
-                <label for="userName">お名前</label>
-                <input type="text" id="userName" name="userName" placeholder="例: 山田 太郎" required>
-                <div class="notice">※運営側が判断できる名前をご入力ください。</div>
-            </div>
-            <button type="submit">スタート</button>
-        </form>
-    </main>
-</body>
-</html>
+<form id="startForm" action="home.html" method="GET" onsubmit="saveName(event)">
+    <div class="input-container">
+        <label for="userName">お名前</label>
+        <input type="text" id="userName" name="userName" placeholder="例: 山田 太郎" required>
+        <div class="notice">※運営側が判断できる名前をご入力ください。</div>
+    </div>
+    <button type="submit">スタート</button>
+</form>
+<script>
+    function saveName(event) {
+        event.preventDefault(); // フォームのデフォルト動作をキャンセル
+        const userName = document.getElementById('userName').value.trim();
+        localStorage.setItem('userName', userName); // 名前をローカルストレージに保存
+        window.location.href = 'home.html'; // ホーム画面に遷移
+    }
+</script>
