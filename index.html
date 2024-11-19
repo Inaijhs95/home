@@ -1,107 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>オサムが愛した数式</title>
-<style>
-    body {
-        background-color: #1c1c1c;
-        color: #e0e0e0;
-        font-family: 'Courier New', Courier, monospace;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 20px;
-        height: 100vh;
-        overflow-y: auto;
-    }
-    .chalkboard {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 10px;
-    }
-    .equation {
-        white-space: pre;
-        font-size: 1.4em;
-        line-height: 1.6em;
-        opacity: 0.9;
-        text-shadow: 0 0 5px #333;
-    }
-    .chalk-text {
-        color: #f0f0f0;
-    }
-    .link {
-        color: #ff6f61;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>謎解きキャッシュバック - メインメニュー</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="chalkboard">
-    <div id="equation" class="equation chalk-text"></div>
-</div>
-
-<script>
-    const equationElement = document.getElementById('equation');
-    const equations = [
-        "∫_0^∞ (x^3 e^{-x}) dx = 6",
-        "ζ(2) = π^2 / 6",
-        "lim_{x→0} (sin(x)/x) = 1",
-        "Σ_{k=1}^{∞} (1/k^4) = π^4 / 90",
-        "d/dx (e^x sin(x)) = e^x(sin(x) + cos(x))",
-        "∇ × (∇φ) = 0",
-        "∫ e^{-x^2} dx = √π",
-        "cos(x)^2 + sin(x)^2 = 1",
-        "Γ(3/2) = √π / 2",
-        "(1 + i)^2 = 2i",
-        "Σ_{n=1}^{∞} 1/n(n+1) = 1",
-        "P(x) = x^4 - 4x^3 + 6x^2 - 4x + 1",
-        "x = 19 * (9 + 1) - 18",
-        "171"
-    ];
-
-    let index = 0;
-    let charIndex = 0;
-
-    function typeEquation() {
-        if (index < equations.length) {
-            if (charIndex < equations[index].length) {
-                equationElement.textContent += equations[index][charIndex];
-                charIndex++;
-                setTimeout(typeEquation, 60);
-            } else {
-                equationElement.textContent += "\n";
-                charIndex = 0;
-                index++;
-
-                // 最後に「171」をリンクにする
-                if (index === equations.length - 1) {
-                    makeLink();
-                } else {
-                    setTimeout(typeEquation, 300);
-                }
-            }
-        }
-    }
-
-    function makeLink() {
-        const linkText = document.createElement('span');
-        linkText.classList.add('link');
-        linkText.textContent = "171";
-        linkText.addEventListener('click', () => {
-            window.location.href = "https://line.me/R/oaMessage/%40778unfqy/%E3%83%A2%E3%83%BC%E3%83%AB%E3%82%B9%E4%BF%A1%E5%8F%B7%E3%80%81%E8%A7%A3%E8%AA%AD%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%EF%BC%81";
-        });
-        equationElement.appendChild(linkText);
-    }
-
-    // 数式アニメーションの開始
-    typeEquation();
-</script>
-
+    <header>謎解きキャッシュバック - メインメニュー</header>
+    <main>
+        <h1>名前を入力してスタート！</h1>
+        <form id="startForm" action="quiz.html" method="GET">
+            <div class="input-container">
+                <label for="userName">お名前</label>
+                <input type="text" id="userName" name="userName" placeholder="例: 山田 太郎" required>
+                <div class="notice">※運営側が判断できる名前をご入力ください。</div>
+            </div>
+            <button type="submit">スタート</button>
+        </form>
+    </main>
 </body>
 </html>
-
