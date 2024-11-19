@@ -10,12 +10,12 @@
     <header>ホーム</header>
     <main>
         <h1 id="greeting">こんにちは！</h1>
-        <p>以下に正解状況が表示されます。</p>
+        <p>以下に正解状況とヒント使用状況が表示されます。</p>
         <ul id="statusList">
-            <li id="statusQ1">問題1: 未回答</li>
-            <li id="statusQ2">問題2: 未回答</li>
-            <li id="statusQ3">問題3: 未回答</li>
-            <li id="statusQ4">問題4: 未回答</li>
+            <li id="statusQ1">問題1: 未回答 - ヒント未使用</li>
+            <li id="statusQ2">問題2: 未回答 - ヒント未使用</li>
+            <li id="statusQ3">問題3: 未回答 - ヒント未使用</li>
+            <li id="statusQ4">問題4: 未回答 - ヒント未使用</li>
         </ul>
         <div class="menu">
             <a href="rules.html" class="menu-item">ルール</a>
@@ -24,19 +24,32 @@
         </div>
     </main>
     <script>
-        // ローカルストレージから正解状況を取得して更新
+        // ローカルストレージから正解状況とヒント使用状況を取得して更新
         const updateStatus = () => {
             const statusList = {
-                Q1: localStorage.getItem('correctQ1') === 'true',
-                Q2: localStorage.getItem('correctQ2') === 'true',
-                Q3: localStorage.getItem('correctQ3') === 'true',
-                Q4: localStorage.getItem('correctQ4') === 'true'
+                Q1: {
+                    correct: localStorage.getItem('correctQ1') === 'true',
+                    hintUsed: localStorage.getItem('hintUsedQ1') === 'true'
+                },
+                Q2: {
+                    correct: localStorage.getItem('correctQ2') === 'true',
+                    hintUsed: localStorage.getItem('hintUsedQ2') === 'true'
+                },
+                Q3: {
+                    correct: localStorage.getItem('correctQ3') === 'true',
+                    hintUsed: localStorage.getItem('hintUsedQ3') === 'true'
+                },
+                Q4: {
+                    correct: localStorage.getItem('correctQ4') === 'true',
+                    hintUsed: localStorage.getItem('hintUsedQ4') === 'true'
+                }
             };
 
-            document.getElementById('statusQ1').textContent = `問題1: ${statusList.Q1 ? '正解済み' : '未回答'}`;
-            document.getElementById('statusQ2').textContent = `問題2: ${statusList.Q2 ? '正解済み' : '未回答'}`;
-            document.getElementById('statusQ3').textContent = `問題3: ${statusList.Q3 ? '正解済み' : '未回答'}`;
-            document.getElementById('statusQ4').textContent = `問題4: ${statusList.Q4 ? '正解済み' : '未回答'}`;
+            // 各問題の正解状況とヒント使用状況を更新
+            document.getElementById('statusQ1').textContent = `問題1: ${statusList.Q1.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q1.hintUsed ? '使用済み' : '未使用'}`;
+            document.getElementById('statusQ2').textContent = `問題2: ${statusList.Q2.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q2.hintUsed ? '使用済み' : '未使用'}`;
+            document.getElementById('statusQ3').textContent = `問題3: ${statusList.Q3.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q3.hintUsed ? '使用済み' : '未使用'}`;
+            document.getElementById('statusQ4').textContent = `問題4: ${statusList.Q4.correct ? '正解済み' : '未回答'} - ヒント${statusList.Q4.hintUsed ? '使用済み' : '未使用'}`;
         };
 
         updateStatus();
