@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>ホーム</header>
+    <main>
+        <h1 id="greeting">こんにちは！</h1>
+        <p>以下からルールやFAQを確認し、クイズに挑戦してください。</p>
+        <div class="menu">
+            <a href="rules.html" class="menu-item">ルール</a>
+            <a href="faq.html" class="menu-item">FAQ</a>
+            <a href="quiz.html" class="menu-item">クイズに挑戦</a>
+        </div>
+    </main>
+    <script>
+        // ローカルストレージから名前を取得
+        const userName = localStorage.getItem('userName');
+        const greetingElement = document.getElementById('greeting');
+
+        if (userName) {
+            greetingElement.textContent = `${userName}さん、こんにちは！`;
+        } else {
+            greetingElement.textContent = "こんにちは！名前が設定されていません。";
+        }
+    </script>
+</body>
+</html>
