@@ -29,7 +29,7 @@
         if (answer === correctAnswer) {
             // 正解時の処理
             result.textContent = "正解です！ホーム画面で正解状況を確認してください。";
-            localStorage.setItem('correctQ1', 'true'); // 正解状況を記録
+            localStorage.setItem('correctQ2', 'true'); // 正解状況を記録
             alert('この問題は正解済みになりました。');
             setTimeout(() => {
                 window.location.href = 'home.html'; // ホーム画面にリダイレクト
@@ -42,7 +42,7 @@
 
     // ページ読み込み時に問題のロックを確認
     window.onload = function() {
-        if (localStorage.getItem('correctQ1') === 'true') {
+        if (localStorage.getItem('correctQ3') === 'true') {
             alert('この問題はすでに正解済みです。');
             window.location.href = 'quiz.html'; // クイズ選択画面にリダイレクト
         }
