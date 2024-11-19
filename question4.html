@@ -20,18 +20,34 @@
         <a href="quiz.html">クイズ一覧に戻る</a>
     </main>
     <script>
-        document.getElementById('answerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const answer = document.getElementById('answer').value.trim();
-            const correctAnswer = "きょだい"; // 正解を設定
-            const result = document.getElementById('result');
+    document.getElementById('answerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const answer = document.getElementById('answer').value.trim();
+        const correctAnswer = "きょだい"; // 正解を設定
+        const result = document.getElementById('result');
 
-            if (answer === correctAnswer) {
-                result.textContent = "正解です！次の問題に進んでください。";
-            } else {
-                result.textContent = "不正解です。もう一度挑戦してください。";
-            }
-        });
-    </script>
+        if (answer === correctAnswer) {
+            // 正解時の処理
+            result.textContent = "正解です！ホーム画面で正解状況を確認してください。";
+            localStorage.setItem('correctQ2', 'true'); // 問題2の正解状況を保存
+            alert('この問題は正解済みになりました。');
+            setTimeout(() => {
+                window.location.href = 'home.html'; // ホーム画面にリダイレクト
+            }, 2000);
+        } else {
+            // 不正解時の処理
+            result.textContent = "不正解です。もう一度挑戦してください。";
+        }
+    });
+
+    // ページ読み込み時に問題のロックを確認
+    window.onload = function() {
+        if (localStorage.getItem('correctQ2') === 'true') {
+            alert('この問題はすでに正解済みです。');
+            window.location.href = 'quiz.html'; // クイズ選択画面にリダイレクト
+        }
+    };
+</script>
+
 </body>
 </html>
