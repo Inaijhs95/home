@@ -24,6 +24,12 @@
         </div>
     </main>
     <script>
+        // ユーザー名を取得して表示
+        const userName = localStorage.getItem('userName');
+        if (userName) {
+            document.getElementById('greeting').textContent = `${userName}さん、こんにちは！`;
+        }
+
         // ローカルストレージから正解状況とヒント使用状況を取得して更新
         const updateStatus = () => {
             const statusList = {
