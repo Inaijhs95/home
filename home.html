@@ -8,25 +8,38 @@
 </head>
 <body>
     <header>ホーム</header>
-    <main>
-        <h1 id="greeting">こんにちは！</h1>
-        <p>以下からルールやFAQを確認し、クイズに挑戦してください。</p>
-        <div class="menu">
-            <a href="rules.html" class="menu-item">ルール</a>
-            <a href="faq.html" class="menu-item">FAQ</a>
-            <a href="quiz.html" class="menu-item">クイズに挑戦</a>
-        </div>
-    </main>
-    <script>
-        // ローカルストレージから名前を取得
-        const userName = localStorage.getItem('userName');
-        const greetingElement = document.getElementById('greeting');
+   <main>
+    <h1 id="greeting">こんにちは！</h1>
+    <p id="chanceMessage">判定中...</p>
+    <div class="menu">
+        <a href="rules.html" class="menu-item">ルール</a>
+        <a href="faq.html" class="menu-item">FAQ</a>
+        <a href="quiz.html" class="menu-item">クイズに挑戦</a>
+    </div>
+</main>
+<script>
+    // ローカルストレージから名前を取得
+    const userName = localStorage.getItem('userName');
+    const greetingElement = document.getElementById('greeting');
+    if (userName) {
+        greetingElement.textContent = `${userName}さん、こんにちは！`;
+    }
 
-        if (userName) {
-            greetingElement.textContent = `${userName}さん、こんにちは！`;
-        } else {
-            greetingElement.textContent = "こんにちは！名前が設定されていません。";
-        }
-    </script>
+    // ヒント利用状況を確認
+    const hintUsedQuestion1 = localStorage.getItem('hint_used_question1') === 'true';
+    const hintUsedQuestion2 = localStorage.getItem('hint_used_question2') === 'true';
+    const hintUsedQuestion3 = localStorage.getItem('hint_used_question3') === 'true';
+    const hintUsedQuestion4 = localStorage.getItem('hint_used_question4') === 'true';
+
+    // 5倍チャンスの判定
+    const fiveTimesChance = !(hintUsedQuestion1 || hintUsedQuestion2 || hintUsedQuestion3 || hintUsedQuestion4);
+
+    const chanceMessage = document.getElementById('chanceMessage');
+    if (fiveTimesChance) {
+        chanceMessage.textContent = '現在、5倍チャンスが有効です！';
+    } else {
+        chanceMessage.textContent = 'ヒントを使用したため、5倍チャンスは無効です。';
+    }
+</script>
 </body>
 </html>
