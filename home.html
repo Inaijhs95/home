@@ -25,6 +25,11 @@
         </div>
     </main>
     <script>
+    // UTF-8 対応の Base64 エンコード関数
+    const utf8ToBase64 = (str) => {
+        return btoa(unescape(encodeURIComponent(str)));
+    };
+
     // 正解状況とヒント使用状況の表示を更新
     const updateStatus = () => {
         const statusList = {
@@ -56,6 +61,8 @@
     // 全問正解のチェックとLINE URL生成
     const checkAllCorrectAndGenerateURL = () => {
         const userName = localStorage.getItem('userName');
+        console.log("ユーザー名:", userName);
+
         const statusList = {
             Q1: {
                 correct: localStorage.getItem('correctQ1') === 'true',
@@ -75,14 +82,18 @@
             }
         };
 
+        console.log("正解状況:", statusList);
+
         const allCorrect = statusList.Q1.correct && statusList.Q2.correct && statusList.Q3.correct && statusList.Q4.correct;
+        console.log("全問正解:", allCorrect);
 
         if (allCorrect) {
-            // 全問正解日時
+            console.log("全問正解です。LINEボタンを表示します。");
+
             const completionTime = new Date().toISOString();
 
             // 暗号化データ
-            const encryptData = (data) => btoa(JSON.stringify(data));
+            const encryptData = (data) => utf8ToBase64(JSON.stringify(data));
             const encryptedData = encryptData({
                 name: userName,
                 hints: {
@@ -94,6 +105,8 @@
                 completedAt: completionTime
             });
 
+            console.log("暗号化データ:", encryptedData);
+
             // LINE送信URLを生成
             const lineURL = `https://line.me/R/oaMessage/@778unfqy/${encodeURIComponent(encryptedData)}`;
 
@@ -103,6 +116,8 @@
             sendButton.addEventListener('click', () => {
                 window.location.href = lineURL; // LINE送信リンクを開く
             });
+        } else {
+            console.log("全問正解ではないため、LINEボタンを非表示のままです。");
         }
     };
 
@@ -116,6 +131,7 @@
         checkAllCorrectAndGenerateURL(); // 全問正解をチェック
     };
 </script>
+
 
 </body>
 </html>
