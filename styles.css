@@ -1,0 +1,65 @@
+/* 共通スタイル */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* ヘッダー */
+header {
+    padding: 20px;
+    background-color: #333333;
+    font-size: 24px;
+}
+
+/* メイン */
+main {
+    padding: 50px 20px;
+}
+
+/* 入力フォーム */
+.input-container {
+    margin: 30px auto;
+    width: 300px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* 注意書き */
+.notice {
+    font-size: 12px;
+    color: #cccccc;
+    margin-bottom: 20px;
+}
+
+/* ボタン */
+button {
+    background-color: #444444;
+    color: #ffffff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #666666;
+}
